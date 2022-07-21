@@ -91,7 +91,7 @@ def getNextPos():
                     cont = False
 
     empties = [[countUnknown(y, x) for x in range(cellNR)] for y in range(cellNR)]
-    #print(empties)
+    #print(empties) 
     #bombs = [countBombs(y, x) for x in range(cellNR) for y in range(cellNR)]
 
     for y in range(cellNR):
