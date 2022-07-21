@@ -55,7 +55,7 @@ def countBombs(x, y):
                     positions.append(y + yy)
     return positions
 
-def findNotCommonElemnt(a, b):
+def findNotCommonElement(a, b):
     if len(b) > len(a): c = a; a = b; b = c
 
     for i in range(0, len(a), 2):
@@ -104,12 +104,17 @@ def getNextPos():
                         if x + xx > -1 and x + xx < cellNR and y + yy > -1 and y + yy < cellNR and strs[y + yy][x + xx] != 'x' and strs[y + yy][x + xx] != '?':
                             if int(strs[y + yy][x + xx]) > 0:
                                 nrXXYY = strs[yy][xx]
+                                unkXY = empties[y][x]
+                                unkXXYY = empties[yy][xx]
                                 if nrXY == nrXXYY:
-                                    if math.abs(len(empties[y][x]) - len(empties[yy + y][x + xx])) == 2:
-                                        return findNotCommonElemnt(empties[y][x], empties[yy + y][x + xx])
+                                    if math.abs(len(unkXY) - len(unkXXYY) == 2:
+                                        return findNotCommonElement(unkXY, unkXXYY)
+                                elif nrXY + 1 == nrXXYY
+                                    twoC1n = twoCommon1Not(unkXY, unkXXYY)
+                                    if twoC1n != -1:
+                                        return twoC1n
 
-
-
+                                    
 
     return (xPos, yPos)
 
