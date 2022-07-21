@@ -1,5 +1,6 @@
 from cmath import log
 from itertools import count
+import math
 from subprocess import CREATE_NEW_CONSOLE
 from tkinter.ttk import Sizegrip
 from xml.etree import ElementInclude
@@ -75,8 +76,7 @@ def getNextPos():
             pos = countUnknown(x, y)
             bmb = countBombs(x, y)
             print(str(x) + ", " + str(y) + "(" + char + ")" + " has " + str(len(pos)/2) + " unknown tiles around it and " + str(len(bmb)/2) + " mines.")
-
-
+            
             cont = True
             for i in range(1, 8):
                 if cont == False: continue
@@ -107,6 +107,8 @@ def getNextPos():
                                 if nrXY == nrXXYY:
                                     if math.abs(len(empties[y][x]) - len(empties[yy + y][x + xx])) == 2:
                                         return findNotCommonElemnt(empties[y][x], empties[yy + y][x + xx])
+
+
 
 
     return (xPos, yPos)
