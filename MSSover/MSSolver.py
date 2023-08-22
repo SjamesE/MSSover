@@ -10,7 +10,7 @@ def click(x, y):
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN,0,0)
         time.sleep(0.01)
         win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP,0,0)
-        time.sleep(0.01)
+        time.sleep(0.14)
 
 startX = 612#742
 startY = 322
@@ -56,24 +56,29 @@ def countBombs(x, y):
                     positions.append(y + yOffset)
     return positions
 
-def findAround1stButNot2nd(list1, list2, sort):
-    if sort:
-        if len(list2) > len(list1): 
-            c = list1
-            list1 = list2
-            list2 = c
+def allFrom1stIn2ndRetIn2nd(list1, list2):
+    l3 = list2.copy()
 
     for i in range(0, len(list1), 2):
         found = False
-        for j in range(0, len(list2), 2):
+        for j in range(0, len(l3), 2):
 
-            if list1[i] != list2[j] or list1[i+1] != list2[j+1] : continue
-            found = True
+            if list1[i] == l3[j] and list1[i+1] == l3[j+1]:
 
-        if found == False:
-            return (list1[i], list1[i+1])
+                l3.pop(j)
+                l3.pop(j)
+                j-=2
 
-    return (-1, -1)
+                found = True
+                break
+
+        if not(found):
+            return (-1, -1)
+
+    if len(l3) == 0:
+        return (-1, -1)
+
+    return (l3[0], l3[1])
 
 # check if all squares are common except one, and return that one square. ERR -> (-1, -1)
 def allCommonExceptOne(list1, list2):
@@ -90,6 +95,11 @@ def allCommonExceptOne(list1, list2):
         for j in range(0, len(list2), 2):
 
             if list1[i] == list2[j] and list1[i+1] == list2[j+1]:
+
+                list2.pop(j)
+                list2.pop(j)
+                j-=2
+
                 found = True
                 break
 
@@ -99,7 +109,10 @@ def allCommonExceptOne(list1, list2):
             else:
                 return (-1, -1)
 
-    return notCommon
+    if len(list2) == 0:
+        return notCommon
+    else:
+        return (-1, -1)
 
 def getNextPos():
     xPos = -1
@@ -155,6 +168,8 @@ def getNextPos():
 
             #if x == 22 and y == 11:
             #    _ = 1
+            if x == 15 and y == 11:
+                _=1
 
             for yOffset in range(-1, 2):
                 for xOffset in range(-1, 2):
@@ -163,6 +178,7 @@ def getNextPos():
 
                     yWithOffset = y + yOffset
                     xWithOffset = x + xOffset
+
 
                     # check out of bounds
                     if not(xWithOffset > -1          and
@@ -189,16 +205,19 @@ def getNextPos():
                 #    if len(unkXY) != 4 and len(unkAtOffset) != 4: continue #????????????????
                     
                     # if the 2 tiles have the same nr of bombs around (NOT FOUND)
-                    if nrXYNoBombs == nrAtOffsetNoBombs: #last commented next line and added this one !!!!!!!!!!!!!
+                    if nrXYNoBombs == nrAtOffsetNoBombs:
                     #if nrXYNoBombs == 1 and nrXYNoBombs == nrAtOffsetNoBombs:
                         if nrXYNoBombs == 1:
                             # if difference of unknown tiles is 1
-                            if math.fabs(len(unkXY) - len(unkAtOffset)) == 2:
-                                a = allCommonExceptOne(unkXY, unkAtOffset)
+                            #if math.fabs(len(unkXY) - len(unkAtOffset)) == 2: ???????
+                                a = allFrom1stIn2ndRetIn2nd(unkXY, unkAtOffset)
                                 if a != (-1, -1):
-                                    return a
-                        elif True:
-                            _ = 1 #continue here !!!!!!!!!!!!!!!
+                                    if grid[a[0]][a[1]] != '▒':
+                                        return a
+                        else:
+                            res = allFrom1stIn2ndRetIn2nd(unkXY, unkAtOffset)
+                            if res != (-1, -1):
+                                return res
 
                     # if the difference of empty is 1
                     elif math.fabs(nrXYNoBombs - nrAtOffsetNoBombs) == 1:  
@@ -214,9 +233,6 @@ def getNextPos():
                             #    _ = 1
                             grid[twoC1n[0]] = replaceChar(grid[twoC1n[0]], twoC1n[1], '▒')
 
-                    elif nrXYNoBombs == nrAtOffsetNoBombs:
-
-                        if allFrom1stIn2ndRetIn2nd(unkXY, unkAtOffset)
                     
                 #    # if the 2 tiles have the same nr of bombs around
                 #    if nrXYNoBombs == 1 and nrXYNoBombs == nrAtOffsetNoBombs:
