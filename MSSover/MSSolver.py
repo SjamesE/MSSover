@@ -233,29 +233,6 @@ def getNextPos():
                             #    _ = 1
                             grid[twoC1n[0]] = replaceChar(grid[twoC1n[0]], twoC1n[1], '▒')
 
-                    
-                #    # if the 2 tiles have the same nr of bombs around
-                #    if nrXYNoBombs == 1 and nrXYNoBombs == nrAtOffsetNoBombs:
-                #        # if difference of unknown tiles is 1
-                #        if math.fabs(len(unkXY) - len(unkAtOffset)) == 2:
-                #            a = findAround1stButNot2nd(unkXY, unkAtOffset, True)
-                #            if a != (-1, -1):
-                #                return a
-                #            
-                #    elif math.fabs(nrXYNoBombs - nrAtOffsetNoBombs) == 1:  
-                #        twoC1n = (-1, -1)
-                #
-                #        if len(unkAtOffset)/2 == int(nrAtOffsetNoBombs) + 1:
-                #            twoC1n = findAround1stButNot2nd(unkAtOffset, unkXY, False)
-                #        elif len(unkXY)/2 == int(nrXYNoBombs) + 1:
-                #            twoC1n = findAround1stButNot2nd(unkXY, unkAtOffset, False)
-                #
-                #        if twoC1n != (-1, -1):
-                #            #if grid[twoC1n[0], twoC1n[1]] == '█':
-                #            #    _ = 1
-                #            grid[twoC1n[0]] = replaceChar(grid[twoC1n[0]], twoC1n[1], '▒')
-                            
-
     return (-1, -1)
 
 
